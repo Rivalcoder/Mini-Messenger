@@ -12,7 +12,7 @@ function Chatapp() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        socket = io('https://messenger-serverroom.vercel.app');
+        socket = io('wss://messenger-server-0h60.onrender.com/'); // Connect to the server
 
         socket.emit('joinRoom', { username, room });
 
