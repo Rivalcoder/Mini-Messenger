@@ -12,7 +12,7 @@ function Chatapp() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        socket = io('http://localhost:5000');
+        socket = io('https://private-chatroom.vercel.app');
 
         socket.emit('joinRoom', { username, room });
 
