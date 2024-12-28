@@ -12,7 +12,7 @@ function Page() {
             return;
         } else {
             alert("Welcome " + val + " to Room " + room);
-            navigate('/app', { state: { username: val, room: room } });
+            navigate('/loader', { state: { username: val, room: room } });
         }
     }
 
