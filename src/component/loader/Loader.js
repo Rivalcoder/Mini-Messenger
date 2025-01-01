@@ -5,11 +5,11 @@ import "./loader.css";
 const Loader = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { username, room } = location.state || {};
+    const { username, room,random } = location.state || {};
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate('/app', {  state: { username:username, room: room }});
+            navigate('/app', {  state: { username:username, room: room ,random :random},replace: true });
         }, 3000);
 
         return () => clearTimeout(timer);

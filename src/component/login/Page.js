@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./page.css"
+// import QRCodeReader from '../qr/qr-reader';
 function Page() {
     const [val, setVal] = useState('');
     const [room, setRoom] = useState('');
     const navigate = useNavigate();
+    const random=Math.floor(Math.random()*7);
 
     function handleClick() {
         if (val === '' || room === '') {
@@ -12,7 +14,7 @@ function Page() {
             return;
         } else {
             alert("Welcome " + val + " to Room " + room);
-            navigate('/loader', { state: { username: val, room: room } });
+            navigate('/loader', { state: { username: val, room: room ,random :random}});
         }
     }
 
@@ -27,6 +29,7 @@ function Page() {
                         <button type="button" onClick={handleClick}>Connect</button>
                         <button type="reset">Reset</button>
                     </div>
+                    {/* {<QRCodeReader />} */}
                 </form>
                 <p className="ref">Need Help ? <a href='https://github.com/Rivalcoder'>Ref</a></p>
             </div>
