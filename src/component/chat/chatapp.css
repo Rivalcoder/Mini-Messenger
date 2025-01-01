@@ -55,10 +55,14 @@
 .messages-container{
     width: 80%;
     height: 60%;
-    background-color: cadetblue;
+    background-color: #e0e9e9;
     border-radius: 25px;
     padding: 20px;
     overflow-y:scroll;
+    display: flex;
+    flex-direction:  column;
+    gap:30px;
+    align-items: flex-start;
 }
 .form-container{
     display: flex;
@@ -87,7 +91,21 @@
 ::-webkit-scrollbar {
     width: 0px;
 }
-
+.message{
+    background-color: #121f3a;
+    width: 40%;
+    padding: 3px;
+    padding-left: 15px;
+    border-radius: 30px;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    align-self: flex-start;
+}
+.message.user{
+    color: #fff;
+    align-self: flex-end; /* Aligns to the right for the user */
+}
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import QRCodeGenerator from '../qr/qr';
 import io from 'socket.io-client';
@@ -23,6 +23,8 @@ function Chatapp() {
     const [users, setUsers] = useState([]);
     const [qrShow, setQr] = useState(false);
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
+    const messagesEndRef = useRef(null); // Ref for the end of the messages
+
 
     useEffect(() => {
         socket = io('wss://messenger-server-0h60.onrender.com/');
@@ -48,6 +50,13 @@ function Chatapp() {
             socket.off();
         };
     }, [username, room]);
+
+    useEffect(() => {
+        // Scroll to the bottom of the messages container whenever messages update
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
 
     function sendMessage(e) {
         e.preventDefault();
@@ -105,10 +114,13 @@ function Chatapp() {
 
                     <div className="messages-container">
                         {messages.map((message, index) => (
-                            <div key={index} className="message">
-                                <p>{message.user}: {message.text}</p>
+                            <div key={index} className={`message  ${message.user===username ?'user':''}`}>
+                                <p>{message.user}</p>
+                                <p>{message.text}</p>
                             </div>
                         ))}
+                        <div ref={messagesEndRef}></div>
+
                     </div>
 
                     <form className="form-container" onSubmit={sendMessage}>
