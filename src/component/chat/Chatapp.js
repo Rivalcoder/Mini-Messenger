@@ -92,12 +92,12 @@ function Chatapp() {
                 {/*Left Box*/}
 
                 <div className={`navbar ${isNavbarOpen ? '' : 'hidden'}`}>
-                    <h1>Chat Room Info ...</h1>
+                    <h1 className='heading0'>Chat Room Info ...</h1>
                     <img src={rand[random]} alt="logo" className="logo" />
                     <p className='username'>{username}</p>
                     <p className='room-id'>Room-Tag:{room}</p>
-                    <h3>Joined-Participants..</h3>
-                    <ul>
+                    <h3 className='header-par'>Joined-Participants..</h3>
+                    <ul className='list-par'>
                         {users.map((user, index) => (
                             <li key={index}>{user}</li>
                         ))}
@@ -110,12 +110,12 @@ function Chatapp() {
                 {/*Right Box*/}
 
                 <div className="chat-container">
-                    <h1>Welcome to the chat room</h1>
+                    <h1 className='heading animate__backInDown' >Welcome to chat room</h1>
 
                     <div className="messages-container">
                         {messages.map((message, index) => (
                             <div key={index} className={`message  ${message.user===username ?'user':''}`}>
-                                <p>{message.user}</p>
+                                <p className='username-col'>{message.user}</p>
                                 <p>{message.text}</p>
                             </div>
                         ))}
