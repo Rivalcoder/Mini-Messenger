@@ -10,6 +10,8 @@ import img4 from '../../Assets/icons/img4.png';
 import img5 from '../../Assets/icons/img5.jpg';
 import img6 from '../../Assets/icons/img6.png'; 
 import img7 from '../../Assets/icons/img7.jpg';
+import menu from '../../Assets/menu.png';
+import close from '../../Assets/close.png';
 
 let socket;
 
@@ -87,12 +89,12 @@ function Chatapp() {
     return (
         <div className="chat-body">
 
-            <button className="navbar-btn" onClick={toggleNavbar}>{!isNavbarOpen ? '❌' : '⛩️'}</button>
+            <button className="navbar-btn" onClick={toggleNavbar}>{!isNavbarOpen ? <img className='menu' src={menu} alt="Menu Icon" /> : <img className='menu' src={close} alt="Close Icon" />}</button>
                 
                 {/*Left Box*/}
 
                 <div className={`navbar ${isNavbarOpen ? '' : 'hidden'}`}>
-                    <h1 className='heading0'>Chat Room Info ...</h1>
+                    <h2 className='heading0'>Chat Room Info ...</h2>
                     <img src={rand[random]} alt="logo" className="logo" />
                     <p className='username'>{username}</p>
                     <p className='room-id'>Room-Tag:{room}</p>
@@ -104,7 +106,9 @@ function Chatapp() {
                     </ul>
                     <button className='logout' onClick={handleLogout}>Logout</button>
                     <button className='qr-btn' onClick={runQr}>QR Code Generate</button>
+                    <div className='qr'>
                     {qrShow && <QRCodeGenerator roomid={room} />}
+                    </div>
                 </div>
 
                 {/*Right Box*/}
