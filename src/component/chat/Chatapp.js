@@ -89,7 +89,7 @@ function Chatapp() {
     return (
         <div className="chat-body">
 
-            <button className="navbar-btn" onClick={toggleNavbar}>{!isNavbarOpen ? <img className='menu' src={menu} alt="Menu Icon" /> : <img className='menu' src={close} alt="Close Icon" />}</button>
+            <button className="navbar-btn" onClick={toggleNavbar}>{isNavbarOpen ? <img className='menu' src={menu} alt="Menu Icon" /> : <img className='menu' src={close} alt="Close Icon" />}</button>
                 
                 {/*Left Box*/}
 
