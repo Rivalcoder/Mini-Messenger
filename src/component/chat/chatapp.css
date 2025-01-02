@@ -137,32 +137,35 @@
     width: 80%;
     height: 60%;
     background-color: #e0e9e9;
-    border-radius: 25px;
     padding: 20px;
     overflow-y:scroll;
     display: flex;
     flex-direction:  column;
     gap:30px;
     align-items: flex-start;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .form-container{
     display: flex;
     flex-direction: row;
     margin-top: 20px;
-    gap: 2px;
+    gap: 10px;
 }
 .form-container input{
-    width: 55%;
+    width:30%;
     height: 30px;
     border-radius: 50px;
     padding:10px;
     font-size:medium;
     font-family: "Outfit", serif;
     outline: none;
+    transition:all 0.5s ease-in-out;
 }
 
 .form-container input:focus{
     outline:3px solid #ced8ce;
+    width:45%;
 }
 
 .form-container button{
@@ -197,7 +200,7 @@
 }
 .message.user{
     color: #fff;
-    align-self: flex-end; /* Aligns to the right for the user */
+    align-self: flex-end;
 }
 .username-col{
     color: rgb(102, 180, 24);
@@ -240,11 +243,21 @@
     .navbar.hidden{
         transform: translateX(0%);
     }
+    .form-container input{
+        width: 60%;
+    }
+    .form-container input:focus{
+        width: 80%;
+    }
     .form-container button{
-        width: 20%;
+        width: 25%;
     }
     .message{
         min-width: 20%;
+    }
+    .form-container{
+        flex-direction: column;
+        gap:15px;
     }
 
     
