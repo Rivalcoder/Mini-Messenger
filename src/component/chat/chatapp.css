@@ -259,6 +259,12 @@
         flex-direction: column;
         gap:15px;
     }
+    .container{
+        width:100%;
+    }
+    .heading{
+        margin-top: 10px;
+    }
 
     
     
