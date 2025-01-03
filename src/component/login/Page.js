@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./page.css"
+import "./page.css";
+import Fall from "../Falling/fall";
+
 // import QRCodeReader from '../qr/qr-reader';
 function Page() {
     const [val, setVal] = useState('');
@@ -19,6 +21,8 @@ function Page() {
     }
 
     return (
+        // <div>
+        // <Fall />
         <div className="login">
             <div className="Container">
                 <form>
@@ -34,6 +38,7 @@ function Page() {
                 <p className="ref">Need Help ? <a href='https://github.com/Rivalcoder'>Ref</a></p>
             </div>
         </div>
+        // </div>
     )
 }
 
