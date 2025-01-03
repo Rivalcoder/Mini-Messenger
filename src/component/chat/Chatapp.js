@@ -89,7 +89,6 @@ function Chatapp() {
     return (
         <div className="chat-body">
 
-            <button className="navbar-btn" onClick={toggleNavbar}>{isNavbarOpen ? <img className='menu' src={menu} alt="Menu Icon" /> : <img className='menu' src={close} alt="Close Icon" />}</button>
                 
                 {/*Left Box*/}
 
@@ -114,6 +113,7 @@ function Chatapp() {
                 {/*Right Box*/}
 
                 <div className="chat-container">
+                    <button className="navbar-btn" onClick={toggleNavbar}>{isNavbarOpen ? <img className='menu' src={menu} alt="Menu Icon" /> : <img className='menu' src={close} alt="Close Icon" />}</button>
                     <h1 className='heading animate__backInDown' >Welcome to chat room</h1>
 
                     <div className="messages-container">

@@ -31,17 +31,17 @@
 }
 
 .navbar-btn {
-    position: absolute;
+    /* position: absolute; */
     top: 20px;
     left: 20px;
     color: #fff;
     border: none;
     cursor: pointer;
-    z-index: 1000;
+    /* z-index: 1000; */
     width: 0px;
     height: 0px;
     background-color: #1b202a;
-
+    display:None
 }
 .menu{
     width: 30px;
@@ -114,9 +114,7 @@
     font-size:x-large;
     text-transform:capitalize;
 }
-.navbar-btn{
-    display:None
-}
+
 
 
 /* Message Box */
@@ -143,7 +141,7 @@
     flex-direction:  column;
     gap:30px;
     align-items: flex-start;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .form-container{
@@ -222,6 +220,7 @@
         position:absolute;
         width:70%;;
         border-radius: 0px  20px 20px 0px;
+        overflow-y: scroll;
         border-right:1px solid rgb(230, 225, 225)
 
     }
@@ -229,7 +228,9 @@
     .navbar-btn{
         background-color:transparent;
         display: block;
-        position: absolute;
+        align-self: flex-start;
+        margin-left: 10px;
+       /*  position: absolute; */
         top: 20px;
         left: 20px;
         z-index: 10;
@@ -259,8 +260,8 @@
         flex-direction: column;
         gap:15px;
     }
-    .container{
-        width:100%;
+    .chat-container{
+        overflow-y:scroll;
     }
     .heading{
         margin-top: 10px;
