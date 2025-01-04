@@ -25,6 +25,7 @@ This is a real-time chat application built with React, Socket.io, and QR code fu
     ``` sh
     npm install
 
+- If You want Create like This you need to Create and Host Server for Web Sockets Connection and Get Response from Server Side..
 
 ## 📦 Dependencies
     Here are the main dependencies used in this project:
@@ -51,6 +52,15 @@ This is a real-time chat application built with React, Socket.io, and QR code fu
 
 ## 📷 Photos
 
-![image1](./src/Assets/image1.png)
-![image2](./src/Assets/image2.png)
+- ![image1](./src/Assets/image1.png)
+
+- ![image2](./src/Assets/image2.png)
+
+
+
+## Page Url:
+
+- Hosted Web Page In the Below url 🏴:
+
+    - Open your browser and navigate to https://private-chatroom.vercel.app/
 
