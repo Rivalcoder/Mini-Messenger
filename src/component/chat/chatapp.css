@@ -121,7 +121,7 @@
 /* Message Box */
 
 .chat-container{
-    width:75%;
+    width:80%;
     height:100vh;
     display: flex;
     flex-direction: column;
