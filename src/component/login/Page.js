@@ -8,7 +8,7 @@ function Page() {
     const [val, setVal] = useState('');
     const [room, setRoom] = useState('');
     const navigate = useNavigate();
-    const random=Math.floor(Math.random()*7);
+    const random=Math.floor(Math.random()*9);
 
     function handleClick() {
         if (val === '' || room === '') {
