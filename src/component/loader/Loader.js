@@ -8,6 +8,10 @@ const Loader = () => {
     const { username, room,random } = location.state || {};
 
     useEffect(() => {
+    if(!username || !room)
+        {
+            navigate('/', { replace: true });
+        }
         const timer = setTimeout(() => {
             navigate('/app', {  state: { username:username, room: room ,random :random},replace: true });
         }, 3000);

@@ -8,10 +8,9 @@ export default  function Rout() {
         <BrowserRouter>        
             <Routes>
                 <Route path="/" element={<Page />} />
-                <Route path="/load" element={<ChatApp />}/>
                 <Route path="/loader" element={<Loader />}/>
                 <Route path="/app" element={<ChatApp />} />
-                <Route path="*" element={<h1>404 Not Found</h1>} />
+                <Route path="*" element={<h1 style={{color:'white'}}>404 Not Found</h1>} />
                 
             </Routes>
         </BrowserRouter>

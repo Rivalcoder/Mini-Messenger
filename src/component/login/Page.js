@@ -21,8 +21,8 @@ function Page() {
     }
 
     return (
-        // <div>
-        // <Fall />
+        <div>
+        <Fall />
         <div className="login">
             <div className="Container">
                 <form>
@@ -38,7 +38,7 @@ function Page() {
                 <p className="ref">Need Help ? <a href='https://github.com/Rivalcoder'>Ref</a></p>
             </div>
         </div>
-        // </div>
+     </div>
     )
 }
 

@@ -11,11 +11,12 @@ body, html {
 
 .login{
     font-family: 'Josefin Sans', sans-serif;
-    background-image:url("../../Assets/black.png");
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
+    z-index: 2;
 }
 
 .Container{

@@ -28,7 +28,7 @@ const Fall = () => {
     return () => clearInterval(interval); // Cleanup the interval on unmount
   }, []);
 
-  return <div className="stars-container"></div>;
+  return(<div className="body-fall"><div className="stars-container"></div></div>);
 };
 
 export default Fall;

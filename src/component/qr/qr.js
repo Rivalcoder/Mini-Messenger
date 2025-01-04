@@ -5,7 +5,7 @@ const QRCodeGenerator = (props) => {
 
   return (
     <div>
-      <p>QR Code Generator</p>
+      <p>QR Code For Room</p>
       <QRCodeCanvas value={props.roomid} />
     </div>
   );
