@@ -58,7 +58,7 @@ This is a real-time chat application built with React, Socket.io, and QR code fu
 
 
 
-## Page Url:
+## 🌐 Page Url:
 
 - Hosted Web Page In the Below url 🏴:
 
