@@ -12,8 +12,7 @@ import img6 from '../../Assets/icons/img6.png';
 import img7 from '../../Assets/icons/img7.png';
 import img8 from '../../Assets/icons/img8.png'; 
 import img9 from '../../Assets/icons/img9.png';
-import menu from '../../Assets/menu.png';
-import close from '../../Assets/close.png';
+import { Menu, X, Send, LogOut, QrCode } from 'lucide-react'; // Import icons
 
 let socket;
 
@@ -23,11 +22,18 @@ function Chatapp() {
     const { username, room, random } = location.state || {};
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    const rand = [img1, img2, img3, img4, img5, img6, img7,img8,img9];
+    const rand = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
     const [users, setUsers] = useState([]);
     const [qrShow, setQr] = useState(false);
-    const [isNavbarOpen, setIsNavbarOpen] = useState(true);
+    const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
+
+    // Format current time for messages
+    const formatTime = () => {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
 
     // Initialize socket and handle events
     useEffect(() => {
@@ -36,7 +42,10 @@ function Chatapp() {
         socket.emit('joinRoom', { username, room });
 
         socket.on('previousMessages', (previousMessages) => {
-            setMessages(previousMessages);
+            setMessages(previousMessages.map(msg => ({
+                ...msg,
+                time: msg.time || formatTime()
+            })));
         });
 
         socket.on('User', (user) => {
@@ -44,12 +53,31 @@ function Chatapp() {
         });
 
         socket.on('message', (message) => {
-            setMessages((messages) => [...messages, message]);
+            setMessages((messages) => [...messages, {
+                ...message,
+                time: formatTime()
+            }]);
         });
+
+        // Check if navbar should be open by default on desktop
+        const handleResize = () => {
+            if (window.innerWidth > 768) {
+                setIsNavbarOpen(true);
+            } else {
+                setIsNavbarOpen(false);
+            }
+        };
+
+        // Initialize correct state
+        handleResize();
+        
+        // Add event listener
+        window.addEventListener('resize', handleResize);
 
         return () => {
             socket.disconnect();
             socket.off();
+            window.removeEventListener('resize', handleResize);
         };
     }, [username, room]);
 
@@ -62,7 +90,10 @@ function Chatapp() {
     
     if (!username || !room) {
         navigate('/', { replace: true });
-        return(<center><h1 style={{color:'whitesmoke'}}>Please Login to Continue</h1></center>);
+        return(<div className="unauthorized-access">
+            <h1>Please Login to Continue</h1>
+            <button onClick={() => navigate('/')}>Go to Login</button>
+        </div>);
     }
 
     // Send message handler
@@ -84,7 +115,7 @@ function Chatapp() {
     };
 
     // Toggle QR code display
-    const runQr = () => {
+    const toggleQr = () => {
         setQr(!qrShow);
     };
 
@@ -93,42 +124,87 @@ function Chatapp() {
         setIsNavbarOpen(!isNavbarOpen);
     };
 
+    // Close sidebar on mobile when clicking outside
+    const handleOverlayClick = () => {
+        if (window.innerWidth <= 768) {
+            setIsNavbarOpen(false);
+        }
+    };
+
+    // Handle enter key press in input
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage(e);
+        }
+    };
+
     // Render the chat app
     return (
         <div className="chat-body">
-            {/* Left Box */}
-            <div className={`navbar ${isNavbarOpen ? '' : 'hidden'}`}>
-                <h2 className="heading0">Chat Room Info ...</h2>
-                <img src={rand[random]} alt="logo" className="logo" />
-                <p className="username">{username}</p>
-                <p className="room-id">Room-Tag: {room}</p>
-                <h3 className="header-par">Joined-Participants..</h3>
+            {/* Sidebar Overlay for Mobile */}
+            {isNavbarOpen && window.innerWidth <= 768 && (
+                <div className="sidebar-overlay active" onClick={handleOverlayClick}></div>
+            )}
+            
+            {/* Sidebar */}
+            <div className={`navbar ${isNavbarOpen ? 'hidden' : ''}`}>
+                <div className="navbar-header">
+                    <h2 className="heading0">Chat Room</h2>
+                </div>
+                
+                {/* User Profile */}
+                <div className="user-profile">
+                    <img src={rand[random]} alt="Profile" className="logo" />
+                    <div className="user-info">
+                        <p className="username">{username}</p>
+                        <p className="room-id">#{room}</p>
+                    </div>
+                </div>
+                
+                {/* Participants List */}
+                <h3 className="header-par">Active Participants</h3>
                 <ul className="list-par">
                     {users.map((user, index) => (
                         <li key={index}>{user}</li>
                     ))}
                 </ul>
-                <button className="logout" onClick={handleLogout}>
-                    Logout
-                </button>
-                <button className="qr-btn" onClick={runQr}>
-                    QR Code Generate
-                </button>
-                <div className="qr">{qrShow && <QRCodeGenerator roomid={room} />}</div>
+                
+                {/* Sidebar Buttons */}
+                <div className="sidebar-buttons">
+                    <button className="button qr-btn" onClick={toggleQr}>
+                        <QrCode size={18} />
+                        {qrShow ? 'Hide QR Code' : 'Show QR Code'}
+                    </button>
+                    <button className="button logout" onClick={handleLogout}>
+                        <LogOut size={18} />
+                        Logout
+                    </button>
+                </div>
+                
+                {/* QR Code */}
+                <div className="qr">
+                    {qrShow && <QRCodeGenerator roomid={room} />}
+                </div>
             </div>
 
-            {/* Right Box */}
+            {/* Main Chat Area */}
             <div className="chat-container">
-                <button className="navbar-btn" onClick={toggleNavbar}>
-                    {isNavbarOpen ? (
-                        <img className="menu" src={menu} alt="Menu Icon" />
-                    ) : (
-                        <img className="menu" src={close} alt="Close Icon" />
-                    )}
-                </button>
-                <h1 className="heading animate__backInDown">Welcome to chat room</h1>
+                {/* Chat Header */}
+                <div className="chat-header">
+                    <button className="toggle-btn" onClick={toggleNavbar}>
+                        {isNavbarOpen ? (
+                            <X className="menu" />
+                        ) : (
+                            <Menu className="menu" />
+                        )}
+                    </button>
+                    <h1 className="heading">Room: {room}</h1>
+                    <div>{users.length} online</div>
+                </div>
 
-                <div className="messages-container">
+                {/* Messages Area */}
+                <div className="messages-container" ref={messagesContainerRef}>
                     {messages.map((message, index) => (
                         <div
                             key={index}
@@ -138,18 +214,24 @@ function Chatapp() {
                         >
                             <p className="username-col">{message.user}</p>
                             <p>{message.text}</p>
+                            <p className="message-time">{message.time}</p>
                         </div>
                     ))}
                     <div ref={messagesEndRef}></div>
                 </div>
 
+                {/* Message Input Form */}
                 <form className="form-container" onSubmit={sendMessage}>
                     <input
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
+                        onKeyPress={handleKeyPress}
                         placeholder="Type a message..."
                     />
-                    <button type="submit">Send</button>
+                    <button type="submit">
+                        <Send size={18} />
+                        Send
+                    </button>
                 </form>
             </div>
         </div>

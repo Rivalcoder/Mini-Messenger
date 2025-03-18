@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./page.css";
-import Fall from "../Falling/fall";
 
-// import QRCodeReader from '../qr/qr-reader';
 function Page() {
     const [val, setVal] = useState('');
     const [room, setRoom] = useState('');
     const navigate = useNavigate();
-    const random=Math.floor(Math.random()*9);
+    const random = Math.floor(Math.random() * 9);
 
     function handleClick() {
         if (val === '' || room === '') {
@@ -16,30 +14,67 @@ function Page() {
             return;
         } else {
             alert("Welcome " + val + " to Room " + room);
-            navigate('/loader', { state: { username: val, room: room ,random :random}});
+            navigate('/loader', { state: { username: val, room: room, random: random }});
         }
     }
 
     return (
-        <div>
-        <Fall />
-        <div className="login">
-            <div className="Container">
-                <form>
-                    <h2 className="nothing">Welcome </h2>
-                    <input type="text" className="box" placeholder="Username.." onChange={(e) => { setVal(e.target.value) }}></input>
-                    <input type="text" className="box" placeholder="Create or Join Room.." onChange={(e) => { setRoom(e.target.value) }} ></input>
-                    <div className="row">
-                        <button type="button" onClick={handleClick}>Connect</button>
-                        <button type="reset">Reset</button>
+        <div className="login-container">
+            <div className="animated-background">
+                <div className="light-beam"></div>
+                <div className="particles"></div>
+            </div>
+            
+            <div className="login-card">
+                <div className="card-header">
+                    <h2>Welcome</h2>
+                    <div className="card-decoration"></div>
+                </div>
+                
+                <form className="login-form">
+                    <div className="input-group">
+                        <input 
+                            type="text" 
+                            className="input-field" 
+                            placeholder="Username" 
+                            onChange={(e) => { setVal(e.target.value) }}
+                        />
+                        <div className="input-highlight"></div>
                     </div>
-                    {/* {<QRCodeReader />} */}
+                    
+                    <div className="input-group">
+                        <input 
+                            type="text" 
+                            className="input-field" 
+                            placeholder="Create or Join Room" 
+                            onChange={(e) => { setRoom(e.target.value) }}
+                        />
+                        <div className="input-highlight"></div>
+                    </div>
+                    
+                    <div className="button-group">
+                        <button 
+                            type="button" 
+                            className="btn connect-btn" 
+                            onClick={handleClick}
+                        >
+                            Connect
+                        </button>
+                        <button 
+                            type="reset" 
+                            className="btn reset-btn"
+                        >
+                            Reset
+                        </button>
+                    </div>
                 </form>
-                <p className="ref">Need Help ? <a href='https://github.com/Rivalcoder'>Ref</a></p>
+                
+                <p className="help-text">
+                    Need Help? <a href='https://github.com/Rivalcoder' className="help-link">Ref</a>
+                </p>
             </div>
         </div>
-     </div>
-    )
+    );
 }
 
 export default Page;
