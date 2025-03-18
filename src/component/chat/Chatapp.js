@@ -12,7 +12,7 @@ import img6 from '../../Assets/icons/img6.png';
 import img7 from '../../Assets/icons/img7.png';
 import img8 from '../../Assets/icons/img8.png'; 
 import img9 from '../../Assets/icons/img9.png';
-import { Menu, X, Send, LogOut, QrCode } from 'lucide-react'; // Import icons
+import { Menu, X, Send, LogOut, QrCode } from 'lucide-react';
 
 let socket;
 
@@ -182,9 +182,9 @@ function Chatapp() {
                     </button>
                 </div>
                 
-                {/* QR Code */}
+                {/* QR Code - now passing username as well */}
                 <div className="qr">
-                    {qrShow && <QRCodeGenerator roomid={room} />}
+                    {qrShow && <QRCodeGenerator roomid={room} username={username} />}
                 </div>
             </div>
 

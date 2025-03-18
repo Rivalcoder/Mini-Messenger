@@ -1,36 +1,91 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QrScanner from 'qr-scanner';
-import 'qr-scanner/qr-scanner-worker.min.js'; // Import the worker script
+import QrScanner  from 'qr-scanner';
+import { X, Camera } from 'lucide-react';
+import './qr-styles.css';
 
-const QRCodeReader = () => {
+const QRScanner = ({ onClose }) => {
   const navigate = useNavigate();
+  const videoRef = useRef(null);
+  const scannerRef = useRef(null);
+  const [scanError, setScanError] = useState(null);
 
   useEffect(() => {
-    const videoElem = document.getElementById('qr-video');
-    const qrScanner = new QrScanner(
-      videoElem,
-      (result) => {
-        console.log('Decoded content:', result.data);
-        const { username, room } = JSON.parse(result.data);
-        navigate('/chat', { state: { username, room } });
-      },
-      { returnDetailedScanResult: true }
-    );
+    if (videoRef.current) {
+      // Initialize the QR scanner
+      scannerRef.current = new QrScanner(
+        videoRef.current,
+        (result) => {
+          try {
+            // Parse the QR code data
+            const data = JSON.parse(result.data);
+            
+            // Check if the QR code contains valid room information
+            if (data && data.room) {
+              // Use the username from QR code or default to 'Guest'
+              const username = data.username || 'Guest';
+              const room = data.room;
+              
+              // Generate a random avatar index
+              const random = Math.floor(Math.random() * 9);
+              
+              // Close the scanner
+              onClose();
+              
+              // Navigate to the chat room
+              navigate('/loader', { state: { username, room, random } });
+            } else {
+              setScanError('Invalid QR code format');
+            }
+          } catch (error) {
+            setScanError('Could not parse QR code data');
+          }
+        },
+        {
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
+          maxScansPerSecond: 3,
+        }
+      );
 
-    qrScanner.start();
+      // Start scanning
+      scannerRef.current.start().catch(error => {
+        setScanError(`Camera error: ${error.message}`);
+      });
+    }
 
+    // Cleanup function
     return () => {
-      qrScanner.stop();
+      if (scannerRef.current) {
+        scannerRef.current.stop();
+      }
     };
-  }, [navigate]);
+  }, [navigate, onClose]);
 
   return (
-    <div>
-      <h1>QR Code Reader</h1>
-      <video id="qr-video" style={{ width: '100%' }}></video>
+    <div className="qr-scanner-container">
+      <div className="qr-scanner-header">Scan QR Code</div>
+      
+      <div className="qr-scanner-frame">
+        <video ref={videoRef} className="qr-video" />
+        <div className="qr-scanner-overlay"></div>
+      </div>
+      
+      {scanError ? (
+        <p className="qr-scanner-instructions" style={{ color: '#ff6b6b' }}>
+          {scanError}
+        </p>
+      ) : (
+        <p className="qr-scanner-instructions">
+          Position the QR code within the frame to scan and join a room
+        </p>
+      )}
+      
+      <button className="qr-scanner-close" onClick={onClose}>
+        <X size={16} style={{ marginRight: '4px' }} /> Close Scanner
+      </button>
     </div>
   );
 };
 
-export default QRCodeReader;
+export default QRScanner;

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import QRScanner from '../qr/qr-reader';
+import { QrCode } from 'lucide-react';
 import "./page.css";
 
 function Page() {
     const [val, setVal] = useState('');
     const [room, setRoom] = useState('');
+    const [showScanner, setShowScanner] = useState(false);
     const navigate = useNavigate();
     const random = Math.floor(Math.random() * 9);
 
@@ -17,6 +20,10 @@ function Page() {
             navigate('/loader', { state: { username: val, room: room, random: random }});
         }
     }
+
+    const toggleScanner = () => {
+        setShowScanner(!showScanner);
+    };
 
     return (
         <div className="login-container">
@@ -69,10 +76,19 @@ function Page() {
                     </div>
                 </form>
                 
+                <button className="qr-scan-button" onClick={toggleScanner}>
+                    <QrCode size={18} />
+                    Scan QR Code
+                </button>
+                
                 <p className="help-text">
                     Need Help? <a href='https://github.com/Rivalcoder' className="help-link">Ref</a>
                 </p>
             </div>
+            
+            {showScanner && (
+                <QRScanner onClose={toggleScanner} />
+            )}
         </div>
     );
 }
