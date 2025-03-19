@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QRScanner from '../qr/qr-reader';
 import { QrCode } from 'lucide-react';
@@ -8,21 +8,53 @@ function Page() {
     const [val, setVal] = useState('');
     const [room, setRoom] = useState('');
     const [showScanner, setShowScanner] = useState(false);
+    const [focusInput, setFocusInput] = useState(false);
     const navigate = useNavigate();
     const random = Math.floor(Math.random() * 9);
+
+    // Focus on username input when room is auto-filled
+    useEffect(() => {
+        if (focusInput) {
+            const usernameInput = document.querySelector('input[placeholder="Username"]');
+            if (usernameInput) {
+                usernameInput.focus();
+                setFocusInput(false);
+            }
+        }
+    }, [focusInput]);
 
     function handleClick() {
         if (val === '' || room === '') {
             alert('Please Enter the Details..');
             return;
         } else {
-            alert("Welcome " + val + " to Room " + room);
             navigate('/loader', { state: { username: val, room: room, random: random }});
         }
     }
 
     const toggleScanner = () => {
         setShowScanner(!showScanner);
+    };
+
+    // Handle room detection from QR
+    const handleRoomDetected = (detectedRoom) => {
+        setRoom(detectedRoom);
+        setFocusInput(true);
+        // Show toast or notification
+        const roomInput = document.querySelector('input[placeholder="Create or Join Room"]');
+        if (roomInput) {
+            roomInput.classList.add('highlight-animation');
+            setTimeout(() => {
+                roomInput.classList.remove('highlight-animation');
+            }, 1500);
+        }
+    };
+
+    // Handle enter key for quick submission
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && val && room) {
+            handleClick();
+        }
     };
 
     return (
@@ -38,13 +70,15 @@ function Page() {
                     <div className="card-decoration"></div>
                 </div>
                 
-                <form className="login-form">
+                <form className="login-form" onSubmit={(e) => e.preventDefault()}>
                     <div className="input-group">
                         <input 
                             type="text" 
                             className="input-field" 
                             placeholder="Username" 
+                            value={val}
                             onChange={(e) => { setVal(e.target.value) }}
+                            onKeyDown={handleKeyDown}
                         />
                         <div className="input-highlight"></div>
                     </div>
@@ -54,7 +88,9 @@ function Page() {
                             type="text" 
                             className="input-field" 
                             placeholder="Create or Join Room" 
+                            value={room}
                             onChange={(e) => { setRoom(e.target.value) }}
+                            onKeyDown={handleKeyDown}
                         />
                         <div className="input-highlight"></div>
                     </div>
@@ -70,6 +106,10 @@ function Page() {
                         <button 
                             type="reset" 
                             className="btn reset-btn"
+                            onClick={() => {
+                                setVal('');
+                                setRoom('');
+                            }}
                         >
                             Reset
                         </button>
@@ -87,7 +127,10 @@ function Page() {
             </div>
             
             {showScanner && (
-                <QRScanner onClose={toggleScanner} />
+                <QRScanner 
+                    onClose={toggleScanner} 
+                    onRoomDetected={handleRoomDetected}
+                />
             )}
         </div>
     );

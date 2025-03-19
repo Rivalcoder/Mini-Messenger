@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import QrScanner  from 'qr-scanner';
+import QrScanner from 'qr-scanner';
 import { X, Camera } from 'lucide-react';
 import './qr-styles.css';
 
-const QRScanner = ({ onClose }) => {
+const QRScanner = ({ onClose, onRoomDetected }) => {
   const navigate = useNavigate();
   const videoRef = useRef(null);
   const scannerRef = useRef(null);
   const [scanError, setScanError] = useState(null);
+  const [scanning, setScanning] = useState(true);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -22,18 +23,26 @@ const QRScanner = ({ onClose }) => {
             
             // Check if the QR code contains valid room information
             if (data && data.room) {
-              // Use the username from QR code or default to 'Guest'
-              const username = data.username || 'Guest';
+              // Use the username from QR code or default to null (will be filled by user)
+              const username = data.username || null;
               const room = data.room;
               
-              // Generate a random avatar index
-              const random = Math.floor(Math.random() * 9);
+              // Stop scanning
+              setScanning(false);
               
-              // Close the scanner
-              onClose();
-              
-              // Navigate to the chat room
-              navigate('/loader', { state: { username, room, random } });
+              if (username) {
+                // If username is in QR, we can proceed directly to loader/chat
+                onClose();
+                // Generate a random avatar index
+                const random = Math.floor(Math.random() * 9);
+                navigate('/loader', { state: { username, room, random } });
+              } else {
+                // If only room is in QR, close scanner and fill room field
+                if (onRoomDetected) {
+                  onRoomDetected(room);
+                }
+                onClose();
+              }
             } else {
               setScanError('Invalid QR code format');
             }
@@ -60,7 +69,7 @@ const QRScanner = ({ onClose }) => {
         scannerRef.current.stop();
       }
     };
-  }, [navigate, onClose]);
+  }, [navigate, onClose, onRoomDetected]);
 
   return (
     <div className="qr-scanner-container">
@@ -77,7 +86,7 @@ const QRScanner = ({ onClose }) => {
         </p>
       ) : (
         <p className="qr-scanner-instructions">
-          Position the QR code within the frame to scan and join a room
+          {scanning ? 'Position the QR code within the frame to scan and join a room' : 'QR code detected! Processing...'}
         </p>
       )}
       

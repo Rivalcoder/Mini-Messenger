@@ -275,3 +275,23 @@ body, html {
         gap: 12px;
     }
 }
+
+
+/* Add this to your page.css file */
+@keyframes highlightField {
+    0% { background: rgba(255, 255, 255, 0.08); }
+    50% { background: rgba(94, 77, 255, 0.3); }
+    100% { background: rgba(255, 255, 255, 0.08); }
+}
+
+.highlight-animation {
+    animation: highlightField 1.5s ease;
+}
+
+/* Also make sure body has proper overflow handling */
+body, html {
+    height: 100%;
+    width: 100%;
+    background-color: #0f0f1a;
+    overflow-x: hidden;
+}

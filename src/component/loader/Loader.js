@@ -14,7 +14,7 @@ const Loader = () => {
         }
         const timer = setTimeout(() => {
             navigate('/app', {  state: { username:username, room: room ,random :random},replace: true });
-        }, 3000);
+        }, 1500);
 
         return () => clearTimeout(timer);
     });
