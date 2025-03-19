@@ -24,7 +24,7 @@ const QRScanner = ({ onClose, onRoomDetected }) => {
             // Check if the QR code contains valid room information
             if (data && data.room) {
               // Use the username from QR code or default to null (will be filled by user)
-              const username = data.username || null;
+              const username = null;
               const room = data.room;
               
               // Stop scanning

@@ -26,16 +26,15 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #f9fafb;
-  overflow-x: hidden;
 }
 
 .chat-body {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   background-color: var(--dark-bg);
   color: var(--light-text);
-  position: relative;
+  overflow: hidden;
 }
 
 /* Sidebar Styling */
@@ -50,7 +49,6 @@ body {
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
   overflow-y: auto;
-  height: 100vh;
 }
 
 .navbar-header {
@@ -83,8 +81,8 @@ body {
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   margin-right: 1rem;
   border: 2px solid var(--primary-color);
@@ -95,16 +93,12 @@ body {
 .user-info {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .username {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .room-id {
@@ -123,8 +117,6 @@ body {
   list-style: none;
   width: 100%;
   margin-bottom: 1.5rem;
-  max-height: 30vh;
-  overflow-y: auto;
 }
 
 .list-par li {
@@ -136,9 +128,6 @@ body {
   display: flex;
   align-items: center;
   transition: var(--transition);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .list-par li:before {
@@ -146,7 +135,6 @@ body {
   color: var(--secondary-color);
   font-weight: bold;
   margin-right: 0.5rem;
-  flex-shrink: 0;
 }
 
 .list-par li:hover {
@@ -207,9 +195,6 @@ body {
   flex-direction: column;
   background-color: var(--dark-bg);
   position: relative;
-  height: 100vh;
-  width: calc(100% - 300px);
-  overflow: hidden;
 }
 
 .chat-header {
@@ -220,7 +205,6 @@ body {
   background-color: rgba(26, 32, 44, 0.8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  width: 100%;
 }
 
 .heading {
@@ -229,10 +213,6 @@ body {
   font-weight: 600;
   color: var(--light-text);
   margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 50%;
 }
 
 .toggle-btn {
@@ -257,7 +237,6 @@ body {
   gap: 1rem;
   background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 20px 20px;
-  width: 100%;
 }
 
 .message {
@@ -268,8 +247,6 @@ body {
   position: relative;
   box-shadow: var(--box-shadow);
   animation: fadeIn 0.3s ease;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 @keyframes fadeIn {
@@ -315,7 +292,6 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  width: 100%;
 }
 
 .form-container input {
@@ -364,38 +340,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Unauthorized access screen */
-.unauthorized-access {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: var(--dark-bg);
-  color: var(--light-text);
-  gap: 2rem;
-}
-
-.unauthorized-access h1 {
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.unauthorized-access button {
-  padding: 0.75rem 1.5rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.unauthorized-access button:hover {
-  background-color: var(--primary-light);
-}
-
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
   .navbar {
@@ -405,15 +349,10 @@ body {
     bottom: 0;
     z-index: 1000;
     width: 280px;
-    transition: left 0.3s ease;
   }
 
   .navbar.hidden {
     left: 0;
-  }
-
-  .chat-container {
-    width: 100%;
   }
 
   .toggle-btn {
@@ -422,10 +361,6 @@ body {
 
   .chat-header {
     padding: 1rem 1.25rem;
-  }
-
-  .heading {
-    max-width: 70%;
   }
 
   .messages-container {
@@ -438,8 +373,6 @@ body {
 
   .form-container {
     padding: 1rem;
-    position: sticky;
-    bottom: 0;
   }
 
   .form-container input {
@@ -449,7 +382,6 @@ body {
   .form-container button {
     height: 2.75rem;
     min-width: 2.75rem;
-    padding: 0 1rem;
   }
 
   /* Add overlay when sidebar is open */
@@ -466,26 +398,6 @@ body {
 
   .sidebar-overlay.active {
     display: block;
-  }
-  
-  /* Fix for iPhone and small screens */
-  @media screen and (max-width: 380px) {
-    .form-container button {
-      padding: 0;
-      width: 2.75rem;
-    }
-    
-    .form-container button span {
-      display: none;
-    }
-    
-    .message {
-      max-width: 90%;
-    }
-    
-    .messages-container {
-      padding: 0.75rem;
-    }
   }
 }
 
