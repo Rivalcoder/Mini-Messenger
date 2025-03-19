@@ -103,6 +103,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     gap: 0.5rem;
     background-color: rgba(89, 100, 224, 0.2);
     color: var(--primary-light);

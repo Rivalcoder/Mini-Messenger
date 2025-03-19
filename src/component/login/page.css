@@ -280,3 +280,8 @@
     animation: highlightField 1.5s ease;
 }
 
+.scan-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -115,11 +115,12 @@ function Page() {
                         </button>
                     </div>
                 </form>
-                
+                <div className='scan-btn'>
                 <button className="qr-scan-button" onClick={toggleScanner}>
                     <QrCode size={18} />
                     Scan QR Code
                 </button>
+                </div>
                 
                 <p className="help-text">
                     Need Help? <a href='https://github.com/Rivalcoder' className="help-link">Ref</a>
